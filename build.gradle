@@ -1,0 +1,42 @@
+import org.gradle.plugins.ide.eclipse.model.Link
+import org.gradle.plugins.ide.eclipse.model.SourceFolder
+
+ext.scalaVersion = '2.11'
+ext.scalaReleaseVersion = scalaVersion + '.6'
+ext.scalaJsVersion = '0.6'
+ext.scalaJsReleaseVersion = scalaJsVersion + '.3'
+
+subprojects {
+  apply plugin: 'scala'
+  apply plugin: 'eclipse'
+
+  repositories {
+    mavenCentral()
+  }
+
+  dependencies {
+    compile "org.scala-lang:scala-library:$scalaReleaseVersion"
+  }
+
+  sourceSets {
+    shared {
+      scala {
+        srcDirs = ["$rootDir/shared/src/main/scala"]
+      }
+    }
+  }
+
+  eclipse {
+    project {
+      linkedResources = [new Link('shared', '2', "$rootDir/shared", null)] 
+    }
+    classpath {
+      sourceSets -= [sourceSets.shared] 
+      file {
+        whenMerged { classpath ->
+          entries += new SourceFolder('shared/src/main/scala', null)
+        }
+      }
+    }
+  }
+}

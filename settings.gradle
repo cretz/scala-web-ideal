@@ -1,0 +1,6 @@
+include 'server'
+include 'client'
+
+rootProject.name = 'scala-web-ideal'
+project(":server").name = 'scala-web-ideal-server'
+project(":client").name = 'scala-web-ideal-client'

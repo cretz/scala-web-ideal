@@ -1,0 +1,3 @@
+dependencies {
+  compile "org.scala-js:scalajs-dom_sjs${scalaJsVersion}_$scalaVersion:0.8.0"
+}
