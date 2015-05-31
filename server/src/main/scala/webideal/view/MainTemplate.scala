@@ -1,6 +1,7 @@
 package webideal
 package view
 
+import style.MainStyle
 import scalatags.Text.all._
 import java.nio.charset.StandardCharsets
 import akka.http.scaladsl.model.MediaTypes
@@ -10,7 +11,8 @@ object MainTemplate extends View {
   def apply(
     titleText: String,
     header: Seq[Modifier] = Seq.empty,
-    content: Seq[Modifier] = Seq.empty
+    content: Seq[Modifier] = Seq.empty,
+    footer: Seq[Modifier] = Seq.empty
   ) =
     html(
       head(
@@ -23,9 +25,10 @@ object MainTemplate extends View {
         ),
         css(Assets.webJar("bootstrap", "bootstrap.min.css")),
         // TODO: make the main.css also typesafe instead of a string
-        css(Assets.public("stylesheets/main.css")),
-        scriptPath(Assets.webJar("jquery", "jquery.min.js")),
+        css(Assets.style(MainStyle)),
+        scriptPath(Assets.webJar("jquery", "dist/jquery.min.js")),
         scriptPath(Assets.webJar("bootstrap", "bootstrap.min.js")),
+        scriptPath(Assets.mainJavascriptRemotePath),
         header
       ),
       body(
@@ -81,7 +84,8 @@ object MainTemplate extends View {
             div(id := "content"),
             div(content)
           )
-        )
+        ),
+        footer
       )
     )
 }
