@@ -26,12 +26,16 @@ subprojects {
     }
   }
 
+  compileScala {
+    source sourceSets.shared.scala
+  }
+
   eclipse {
     project {
       linkedResources = [new Link('shared', '2', "$rootDir/shared", null)] 
     }
     classpath {
-      sourceSets -= [sourceSets.shared] 
+      sourceSets -= [sourceSets.shared]
       file {
         whenMerged { classpath ->
           entries += new SourceFolder('shared/src/main/scala', null)

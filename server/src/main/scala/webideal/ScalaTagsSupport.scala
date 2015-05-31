@@ -1,6 +1,5 @@
 package webideal
 
-import scalatags.generic.Modifier
 import scalatags.Text.TypedTag
 import akka.http.scaladsl.model.MediaTypes
 import akka.http.scaladsl.model.ContentType

@@ -1,5 +1,7 @@
 # Akka HTTP w/ All Scala Showcase
 
+I am just trying to try an all-scala approach here as a PoC. I am also using Gradle instead of SBT just to do it and explore the possibility.
+
 Goals:
 
 * Feature parity with https://github.com/hussachai/play-scalajs-showcase

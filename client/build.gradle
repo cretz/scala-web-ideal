@@ -1,3 +1,37 @@
+configurations {
+  provided
+}
+
 dependencies {
   compile "org.scala-js:scalajs-dom_sjs${scalaJsVersion}_$scalaVersion:0.8.0"
+
+  // Have to pretend like scala-js is provided so it isn't considered a runtime lib
+  provided "org.scala-js:scalajs-compiler_$scalaReleaseVersion:$scalaJsReleaseVersion"
+
+  // TODO: Remove this depending upon response to https://groups.google.com/forum/?fromgroups#!topic/scala-js/tcWk7IEosGk
+  provided files("$rootDir/../scalajs_${scalaVersion}-${scalaJsReleaseVersion}/lib/scalajs-cli-assembly_${scalaVersion}-${scalaJsReleaseVersion}.jar")
+  // provided "org.scala-js:scalajs-cli_$scalaVersion:$scalaJsReleaseVersion"
+}
+
+compileScala {
+  scalaCompileOptions.additionalParameters = [
+    '-Xplugin:' + configurations.provided.find { it.name.startsWith('scalajs-compiler_') }
+  ]
+}
+
+task createBuildDir() << {
+  mkdir(project.buildDir.absolutePath + '/js')
+}
+
+task compileScalaJs(type: JavaExec, dependsOn: [compileScala, createBuildDir]) {
+  main = 'org.scalajs.cli.Scalajsld'
+  args = [
+    '--stdlib',
+    configurations.runtime.find { it.name.startsWith('scalajs-library_') },
+    '-o',
+    project.buildDir.absolutePath + '/js/scala-web-ideal.js',
+    compileScala.destinationDir
+  ]
+  classpath configurations.runtime
+  classpath configurations.provided
 }
