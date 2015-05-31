@@ -1,5 +1,24 @@
+apply plugin: 'application'
+
+mainClassName = 'webideal.Main'
+
 dependencies {
   compile "com.typesafe.akka:akka-stream-experimental_$scalaVersion:1.0-RC3"
   compile "com.typesafe.akka:akka-http-core-experimental_$scalaVersion:1.0-RC3"
   compile "com.typesafe.akka:akka-http-experimental_$scalaVersion:1.0-RC3"
+
+  compile "com.lihaoyi:scalatags_$scalaVersion:0.5.2"
+  compile "com.github.japgolly.scalacss:core_$scalaVersion:0.2.0"
+
+  compile 'org.webjars:webjars-locator:0.23'
+  
+  compile 'org.webjars.bower:bootstrap:3.3.4'
+}
+
+tasks.withType(ScalaCompile) {
+  scalaCompileOptions.useAnt = false
+}
+
+run {
+  standardInput = System.in
 }

@@ -2,3 +2,7 @@
 .settings
 .classpath
 /.gradle
+.cache
+/client/bin
+/server/bin
+/server/build
