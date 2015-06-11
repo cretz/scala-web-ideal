@@ -15,7 +15,8 @@ trait PrickleAutowireClient extends autowire.Client[String, Unpickler, Pickler] 
   override def doCall(req: Request): Future[String] = {
     dom.ext.Ajax.post(
       url = pathPrefix + req.path.mkString("/"),
-      data = Pickle.intoString(req.args)
+      data = Pickle.intoString(req.args),
+      headers = Map("Content-Type" -> "application/json")
     ).map(_.responseText)
   }
 }

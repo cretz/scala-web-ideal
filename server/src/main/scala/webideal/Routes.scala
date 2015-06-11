@@ -15,9 +15,15 @@ object Routes extends Directives with ScalaTagsSupport with ScalaCssSupport {
     path(separateOnSlashes(Assets.mainJavascriptRemotePath)) {
       getFromFile(Assets.mainJavascriptLocalPath)
     } ~
+    // TODO: modularize the CSS better than putting it right here in Routes
     path(style.Style.baseDir / (style.MainStyle.name + ".css")) {
       get {
         complete(style.MainStyle)
+      }
+    } ~
+    path(style.Style.baseDir / (style.TodoStyle.name + ".css")) {
+      get {
+        complete(style.TodoStyle)
       }
     } ~
     path("static" / Segment / Rest) { (webJar, partialPath) =>

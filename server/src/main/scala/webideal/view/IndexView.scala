@@ -23,10 +23,7 @@ trait IndexView extends View {
           li("Scala.js shouts out: ", em(id := "scalajsShoutOut"))
         )
       ),
-      // See if we can find a cool way to statically type this. One way might be to
-      //  have a local JsExport file on the server side and make a shared mutable variable
-      //  that is exported and make the actual JsApp main bind it
-      footer = Seq(script(raw("webideal.IndexJs().main()")))
+      footer = Seq(jsModule[IndexJs])
     )
 }
 object IndexView extends IndexView

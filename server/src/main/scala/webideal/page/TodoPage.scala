@@ -10,14 +10,15 @@ trait TodoPage extends Page {
   import TodoPage._
   
   def apply()(implicit ec: ExecutionContext, mat: FlowMaterializer) = {
+    import PrickleAutowireSupport._
     pathEnd {
       get {
-        complete("Page not yet ready")
+        extractRequestContext { implicit ctx =>
+          complete(view.TodoView())
+        }
       }
     } ~
-    post {
-      PrickleSupport.completeWithAutowire[TodoHandler](handler)
-    }
+    completeWithAutowire(AutowireServer.route[TodoHandler](handler))
   }
 }
 object TodoPage extends TodoPage {
