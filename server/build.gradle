@@ -19,17 +19,13 @@ dependencies {
   compile 'org.webjars.bower:bootstrap:3.3.4'
 }
 
-compileScala {
-  scalaCompileOptions.additionalParameters = [
-    '-Ymacro-debug-lite'
-  ]
-}
-
-
 tasks.withType(ScalaCompile) {
   scalaCompileOptions.useAnt = false
 }
 
 run {
   standardInput = System.in
+  systemProperties = [
+    'config.file': "$rootDir/application.conf"
+  ]
 }

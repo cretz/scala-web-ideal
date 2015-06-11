@@ -1,7 +1,6 @@
 package webideal
 
-import scala.scalajs.js.annotation.JSExport
-import scala.scalajs.js.annotation.JSExportDescendentObjects
+import scala.scalajs.js.annotation._
 
 @JSExportDescendentObjects
 trait JsModule {

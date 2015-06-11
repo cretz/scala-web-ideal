@@ -1,13 +1,16 @@
 package webideal
 
-import akka.http.scaladsl.server.Directives
 import akka.http.scaladsl.server.Route
 import org.webjars.WebJarAssetLocator
 import akka.http.scaladsl.server.RequestContext
 import akka.stream.FlowMaterializer
 import scala.concurrent.ExecutionContext
+import akka.http.scaladsl.server.RejectionHandler
+import akka.http.scaladsl.model.StatusCodes
+import scala.util.Try
+import scala.util.Success
 
-object Routes extends Directives with ScalaTagsSupport with ScalaCssSupport {
+object Routes extends Page {
   val webJarLocator = new WebJarAssetLocator()
   
   def apply()(implicit ec: ExecutionContext, mat: FlowMaterializer): Route = {
@@ -15,22 +18,24 @@ object Routes extends Directives with ScalaTagsSupport with ScalaCssSupport {
     path(separateOnSlashes(Assets.mainJavascriptRemotePath)) {
       getFromFile(Assets.mainJavascriptLocalPath)
     } ~
-    // TODO: modularize the CSS better than putting it right here in Routes
-    path(style.Style.baseDir / (style.MainStyle.name + ".css")) {
-      get {
-        complete(style.MainStyle)
-      }
+    path(separateOnSlashes(MainStyle.path)) {
+      get(complete(MainStyle))
     } ~
-    path(style.Style.baseDir / (style.TodoStyle.name + ".css")) {
-      get {
-        complete(style.TodoStyle)
-      }
+    path(separateOnSlashes(todos.TodoStyle.path)) {
+      get(complete(todos.TodoStyle))
     } ~
-    path("static" / Segment / Rest) { (webJar, partialPath) =>
-      getFromResource(webJarLocator.getFullPath(webJar, partialPath))
+    pathPrefix("assets" / "webideal") {
+      getFromResourceDirectory("webideal/assets")
+    } ~
+    path("assets" / Segment / Rest) { (webJar, partialPath) =>
+      Try(webJarLocator.getFullPath(webJar, partialPath)) match {
+        case Success(path) => getFromResource(path)
+        case _ => complete(StatusCodes.NotFound)
+      }
     } ~
     // The different pages
-    pathPrefix("todos") { page.TodoPage() } ~
-    path(PathEnd) { page.IndexPage() }
+    path(PathEnd) { index.IndexPage() } ~
+    pathPrefix("todos") { todos.TodoPage() } ~
+    pathPrefix("hangman") { hangman.HangmanPage() }
   }
 }
