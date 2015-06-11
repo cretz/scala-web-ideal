@@ -12,4 +12,4 @@ trait ScalaCssSupport {
   implicit def scalaCssMarshaller: ToEntityMarshaller[StyleSheet.Base] =
     Marshaller.StringMarshaller.wrap(cssContentType)(_.render)
 }
-object ScalaVssSupport extends ScalaCssSupport
+object ScalaCssSupport extends ScalaCssSupport

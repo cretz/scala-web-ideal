@@ -8,7 +8,11 @@ dependencies {
   compile "com.typesafe.akka:akka-http-experimental_$scalaVersion:1.0-RC3"
 
   compile "com.lihaoyi:scalatags_$scalaVersion:0.5.2"
+  compile "com.lihaoyi:autowire_$scalaVersion:0.2.5"
+  compile "com.lihaoyi:scalarx_$scalaVersion:0.2.8"
   compile "com.github.japgolly.scalacss:core_$scalaVersion:0.2.0"
+  compile "com.github.benhutchison:prickle_$scalaVersion:1.1.5"
+  compile "org.scala-js:scalajs-stubs_$scalaVersion:$scalaJsReleaseVersion"
 
   compile 'org.webjars:webjars-locator:0.23'
   

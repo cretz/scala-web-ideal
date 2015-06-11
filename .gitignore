@@ -1,8 +1,9 @@
 .project
 .settings
 .classpath
-/.gradle
 .cache
+.cache-main
+/.gradle
 /client/bin
 /server/bin
 /server/build

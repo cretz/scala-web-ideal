@@ -3,16 +3,15 @@ package webideal
 import akka.http.scaladsl.server.Directives
 import akka.http.scaladsl.server.Route
 import org.webjars.WebJarAssetLocator
+import akka.http.scaladsl.server.RequestContext
+import akka.stream.FlowMaterializer
+import scala.concurrent.ExecutionContext
 
 object Routes extends Directives with ScalaTagsSupport with ScalaCssSupport {
   val webJarLocator = new WebJarAssetLocator()
   
-  def apply(): Route = {
-    path(PathEnd) {
-      get {
-        complete(view.IndexView(SharedMessages.itWorks))
-      }
-    } ~
+  def apply()(implicit ec: ExecutionContext, mat: FlowMaterializer): Route = {
+    // Some things to support the application
     path(separateOnSlashes(Assets.mainJavascriptRemotePath)) {
       getFromFile(Assets.mainJavascriptLocalPath)
     } ~
@@ -23,6 +22,9 @@ object Routes extends Directives with ScalaTagsSupport with ScalaCssSupport {
     } ~
     path("static" / Segment / Rest) { (webJar, partialPath) =>
       getFromResource(webJarLocator.getFullPath(webJar, partialPath))
-    }
+    } ~
+    // The different pages
+    pathPrefix("todos") { page.TodoPage() } ~
+    path(PathEnd) { page.IndexPage() }
   }
 }

@@ -2,9 +2,8 @@ package webideal
 package style
 
 import scalacss.Defaults._
-import scalacss.Color
 
-object MainStyle extends StyleSheet.Standalone with Style {
+trait MainStyle extends StyleSheet.Standalone with Style {
   import dsl._
   
   val name = "main"
@@ -14,8 +13,7 @@ object MainStyle extends StyleSheet.Standalone with Style {
   
   ".sub-header" - (
     paddingBottom(10 px),
-    // TODO: remove Color() - https://github.com/japgolly/scalacss/issues/42
-    borderBottom(1 px, solid, Color("#eee"))
+    borderBottom(1 px, solid, "#eee".color)
   )
 
   // Hide default border to remove 1px line.
@@ -36,7 +34,7 @@ object MainStyle extends StyleSheet.Standalone with Style {
       overflowX.hidden,
       overflowY.auto,
       backgroundColor("#f5f5f5"),
-      borderRight(1 px, solid, Color("#eee"))
+      borderRight(1 px, solid, "#eee".color)
     )
   )
   
@@ -84,3 +82,4 @@ object MainStyle extends StyleSheet.Standalone with Style {
   
   ".boxsizing-border" - boxSizing.borderBox
 }
+object MainStyle extends MainStyle

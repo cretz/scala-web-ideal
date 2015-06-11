@@ -3,7 +3,12 @@ configurations {
 }
 
 dependencies {
+  compile "com.lihaoyi:scalatags_sjs${scalaJsVersion}_$scalaVersion:0.5.2"
+  compile "com.lihaoyi:autowire_sjs${scalaJsVersion}_$scalaVersion:0.2.5"
+  compile "com.lihaoyi:scalarx_sjs${scalaJsVersion}_$scalaVersion:0.2.8"
   compile "org.scala-js:scalajs-dom_sjs${scalaJsVersion}_$scalaVersion:0.8.0"
+  compile "com.github.benhutchison:prickle_sjs${scalaJsVersion}_$scalaVersion:1.1.5"
+  compile "be.doeraene:scalajs-jquery_sjs${scalaJsVersion}_$scalaVersion:0.8.0"
 
   // Have to pretend like scala-js is provided so it isn't considered a runtime lib
   provided "org.scala-js:scalajs-compiler_$scalaReleaseVersion:$scalaJsReleaseVersion"
@@ -15,6 +20,7 @@ dependencies {
 
 compileScala {
   scalaCompileOptions.additionalParameters = [
+    '-feature',
     '-Xplugin:' + configurations.provided.find { it.name.startsWith('scalajs-compiler_') }
   ]
 }
@@ -29,9 +35,8 @@ task compileScalaJs(type: JavaExec, dependsOn: [compileScala, createBuildDir]) {
     '--stdlib',
     configurations.runtime.find { it.name.startsWith('scalajs-library_') },
     '-o',
-    project.buildDir.absolutePath + '/js/scala-web-ideal.js',
-    compileScala.destinationDir
-  ]
+    project.buildDir.absolutePath + '/js/scala-web-ideal.js'
+  ] + (configurations.runtime + files(compileScala.destinationDir))
   classpath configurations.runtime
   classpath configurations.provided
 }

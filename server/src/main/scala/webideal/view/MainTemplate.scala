@@ -6,6 +6,7 @@ import scalatags.Text.all._
 import java.nio.charset.StandardCharsets
 import akka.http.scaladsl.model.MediaTypes
 import akka.http.scaladsl.model.HttpMethods
+import akka.http.scaladsl.server.RequestContext
 
 object MainTemplate extends View {
   def apply(
@@ -13,7 +14,7 @@ object MainTemplate extends View {
     header: Seq[Modifier] = Seq.empty,
     content: Seq[Modifier] = Seq.empty,
     footer: Seq[Modifier] = Seq.empty
-  ) =
+  )(implicit ctx: RequestContext) =
     html(
       head(
         meta(charset := StandardCharsets.UTF_8.name.toLowerCase),
@@ -72,11 +73,11 @@ object MainTemplate extends View {
           div(cls := "col-sm-3 col-md-2 sidebar")(
             ul(cls := "nav nav-sidebar")(
               // TODO: generate this based on some "page" type of model
-              li(id := "home-page", a(href := "application", "Hello")),
-              li(cls := "menu", a(href := "todos", "Reactive TodoMVC")),
-              li(cls := "menu", a(href := "hangman", "Reactive Hangman")),
-              li(cls := "menu", a(href := "upload", "HTML5 File Upload")),
-              li(cls := "menu", a(href := "chat", "Server Push Chat"))
+              menuItem("Hello", ""),
+              menuItem("Reactive TodoMVC", "todos"),
+              menuItem("Reactive Hangman", "hangman"),
+              menuItem("HTML5 File Upload", "upload"),
+              menuItem("Server Push Chat", "chat")
             )
           ),
           div(cls := "col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main")(
@@ -87,5 +88,13 @@ object MainTemplate extends View {
         ),
         footer
       )
+    )
+
+  def menuItem(name: String, hrefPath: String)(implicit ctx: RequestContext) =
+    li(
+      if (ctx.request.uri.path.toString.stripSuffix("/").endsWith(hrefPath)) cls := "menu active"
+      else cls := "menu",
+      // TODO: make utility to show how relative pathing can work here
+      a(href := "/" + hrefPath, name)
     )
 }

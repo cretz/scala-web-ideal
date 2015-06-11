@@ -2,13 +2,13 @@ package webideal
 package view
 
 import scalatags.Text.all._
+import akka.http.scaladsl.server.RequestContext
 
-object IndexView extends View {
-  def apply(message: String) =
+trait IndexView extends View {
+  def apply(message: String)(implicit ctx: RequestContext) =
     MainTemplate(
-      "Trivial Example",
-      Seq.empty,
-      Seq(
+      titleText = "Trivial Example",
+      content = Seq(
         p(
           "Akka with Scala.js kickstart akin to ",
           a(
@@ -26,6 +26,7 @@ object IndexView extends View {
       // See if we can find a cool way to statically type this. One way might be to
       //  have a local JsExport file on the server side and make a shared mutable variable
       //  that is exported and make the actual JsApp main bind it
-      Seq(script(raw("webideal.IndexJs().main()")))
+      footer = Seq(script(raw("webideal.IndexJs().main()")))
     )
 }
+object IndexView extends IndexView

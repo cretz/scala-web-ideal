@@ -10,6 +10,7 @@ object Main extends App {
   println("Starting server!")
   
   implicit val system = ActorSystem("my-system")
+  import system.dispatcher
   implicit val materializer = ActorFlowMaterializer()
   
   val bindingFuture = Http().bindAndHandle(Routes(), "localhost", 8080)
