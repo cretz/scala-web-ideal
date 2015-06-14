@@ -18,15 +18,8 @@ object Routes extends Page {
     path(separateOnSlashes(Assets.mainJavascriptRemotePath)) {
       getFromFile(Assets.mainJavascriptLocalPath)
     } ~
-    path(separateOnSlashes(MainStyle.path)) {
+    path(separateOnSlashes(Assets.style(MainStyle).stripPrefix("/"))) {
       get(complete(MainStyle))
-    } ~
-    // TODO: move these styles relative to their pages
-    path(separateOnSlashes(todos.TodoStyle.path)) {
-      get(complete(todos.TodoStyle))
-    } ~
-    path(separateOnSlashes(chat.ChatStyle.path)) {
-      get(complete(chat.ChatStyle))
     } ~
     pathPrefix("assets" / "webideal") {
       getFromResourceDirectory("webideal/assets")
@@ -41,6 +34,7 @@ object Routes extends Page {
     path(PathEnd) { index.IndexPage() } ~
     pathPrefix("todos") { todos.TodoPage() } ~
     pathPrefix("hangman") { hangman.HangmanPage() } ~
+    pathPrefix("upload") { upload.UploadPage() } ~
     pathPrefix("chat") { chat.ChatPage() }
   }
 }

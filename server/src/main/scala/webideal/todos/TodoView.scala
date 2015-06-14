@@ -8,7 +8,7 @@ trait TodoView extends View {
   def apply()(implicit ctx: RequestContext) = {
     MainTemplate(
       titleText = "Todos",
-      header = Seq(css(Assets.style(TodoStyle))),
+      header = Seq(css(Assets.relativeStyle(ctx, TodoStyle))),
       footer = Seq(jsModule[TodoJs])
     )
   }

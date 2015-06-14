@@ -2,6 +2,7 @@ package webideal
 package chat
 
 import scalacss.Defaults._
+import scala.language.postfixOps
 
 trait ChatStyle extends StyleSheet.Standalone with Style {
   import dsl._

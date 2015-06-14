@@ -1,6 +1,7 @@
 package webideal
 
 import scalacss.Defaults._
+import scala.language.postfixOps
 
 trait MainStyle extends StyleSheet.Standalone with Style {
   import dsl._

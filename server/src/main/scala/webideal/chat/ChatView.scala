@@ -10,7 +10,7 @@ trait ChatView extends View {
   def apply()(implicit ctx: RequestContext) = {
     MainTemplate(
       titleText = "Server Push Chat",
-      header = Seq(css(Assets.style(ChatStyle))),
+      header = Seq(css(Assets.relativeStyle(ctx, ChatStyle))),
       footer = Seq(jsModuleWithParams[ChatJs](ChatJs.Settings(
         assetsDir = Assets.assetsDir,
         wsBaseUrl = ctx.request.uri.copy(path = Path("/chat/ws"), scheme = "ws").toString

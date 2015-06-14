@@ -15,6 +15,9 @@ trait TodoPage extends Page {
         }
       }
     } ~
+    path(separateOnSlashes(TodoStyle.relativePath)) {
+      get(complete(TodoStyle))
+    } ~
     post {
       import util.PrickleAutowireSupport._
       import sys.dispatcher

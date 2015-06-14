@@ -23,6 +23,9 @@ trait ChatPage extends Page with EventStreamMarshalling {
         }
       }
     } ~
+    path(separateOnSlashes(ChatStyle.relativePath)) {
+      get(complete(ChatStyle))
+    } ~
     path("ws" / Rest) { username =>
       handleWebsocketMessages(websocketFlow(chatRoom, username))
     } ~

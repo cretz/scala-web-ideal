@@ -9,7 +9,7 @@ import scalacss.Defaults._
 trait Style { this: scalacss.mutable.StyleSheet.Base =>
   def name: String
   
-  def path: String = Style.baseDir + '/' + name + ".css"
+  def relativePath: String = "stylesheets/" + name + ".css"
   
   // Fills for things not in ScalaCSS
   val appearance = Attr.real("appearance", Transform keys CanIUse.appearance)
@@ -17,9 +17,6 @@ trait Style { this: scalacss.mutable.StyleSheet.Base =>
   object antialiased extends Literal("antialiased")
 }
 object Style {
-  // TODO: make this a config please
-  val baseDir = "assets/webideal/stylesheets"
-  
   val fontSmoothUse: CanIUse.Subject = {
     import CanIUse.Agent._
     import CanIUse.Support._

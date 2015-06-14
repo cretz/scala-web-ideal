@@ -3,6 +3,7 @@ package todos
 
 import scalacss.Defaults._
 import scala.concurrent.duration._
+import scala.language.postfixOps
 
 trait TodoStyle extends StyleSheet.Standalone with Style {
   import dsl._
@@ -26,7 +27,7 @@ trait TodoStyle extends StyleSheet.Standalone with Style {
     font := "14px 'Helvetica Neue', Helvetica, Arial, sans-serif",
     lineHeight(1.4 em),
     // TODO: make this better please
-    background := "#eaeaea url('../images/bg.png')",
+    background := "#eaeaea url('" + Assets.assetsDir + "/images/bg.png')",
     color("#4d4d4d"),
     fontSmooth := antialiased
   )

@@ -20,6 +20,12 @@ dependencies {
   compile 'org.webjars.bower:bootstrap:3.3.4'
 }
 
+compileScala {
+  scalaCompileOptions.additionalParameters = [
+    '-feature',
+  ]
+}
+
 tasks.withType(ScalaCompile) {
   scalaCompileOptions.useAnt = false
 }

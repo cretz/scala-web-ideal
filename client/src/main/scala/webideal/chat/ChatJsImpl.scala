@@ -8,7 +8,7 @@ import js.Dynamic.{ global => g }
 import org.scalajs.dom
 import scalatags.JsDom._
 import scalatags.JsDom.all._
-import org.scalajs.jquery.{jQuery=>$}
+import org.scalajs.jquery.{ jQuery => $ }
 import autowire._
 import scalajs.concurrent.JSExecutionContext.Implicits.queue
 import scala.util.Success
