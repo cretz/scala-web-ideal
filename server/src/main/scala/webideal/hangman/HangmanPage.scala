@@ -2,10 +2,10 @@ package webideal
 package hangman
 
 import akka.stream.FlowMaterializer
-import scala.concurrent.ExecutionContext
+import akka.actor.ActorSystem
 
 trait HangmanPage extends Page {
-  def apply()(implicit ec: ExecutionContext, mat: FlowMaterializer) = {
+  def apply()(implicit sys: ActorSystem, mat: FlowMaterializer) = {
     pathEnd {
       get {
         extractRequestContext { implicit ctx =>
@@ -16,6 +16,7 @@ trait HangmanPage extends Page {
     post {
       import util.PrickleAutowireSupport._
       import InSessionHangmanHandler._
+      import sys.dispatcher
       withHangmanHandler { handler =>
         completeWithAutowire(AutowireServer.route[HangmanHandler](handler))
       }

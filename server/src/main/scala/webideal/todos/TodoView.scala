@@ -9,7 +9,7 @@ trait TodoView extends View {
     MainTemplate(
       titleText = "Todos",
       header = Seq(css(Assets.style(TodoStyle))),
-      footer = Seq(jsModule[todos.TodoJs])
+      footer = Seq(jsModule[TodoJs])
     )
   }
 }

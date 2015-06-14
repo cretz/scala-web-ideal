@@ -43,7 +43,7 @@ trait TodoStyle extends StyleSheet.Standalone with Style {
     // TODO: more typed
     boxShadow := "0 2px 6px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.15)",
     &.before - (
-      content := "",
+      content := "''",
       borderLeft(1 px, solid, "#f5d6d6".color),
       borderRight(1 px, solid, "#f5d6d6".color),
       width(2 px),
@@ -64,6 +64,8 @@ trait TodoStyle extends StyleSheet.Standalone with Style {
     paddingTop(15 px),
     borderRadius.inherit,
     &.before - (
+      content := "''",
+      position.absolute,
       top(0 px),
       right(0 px),
       left(0 px),
@@ -99,9 +101,9 @@ trait TodoStyle extends StyleSheet.Standalone with Style {
   )
   
   "#new-todo" - (
-    padding(16 px, 16 px, 16 px, 16 px),
+    padding(16 px, 16 px, 16 px, 60 px),
     border.none,
-    background := rgba(0, 0, 0, 0.2),
+    background := rgba(0, 0, 0, 0.02),
     zIndex(100),
     boxShadow := none
   )
@@ -122,7 +124,7 @@ trait TodoStyle extends StyleSheet.Standalone with Style {
     textAlign.center,
     border.none,
     &.before - (
-      content := "»",
+      content := "'»'",
       fontSize(28 px),
       color("#d9d9d9"),
       padding(0 px, 25 px, 7 px)
@@ -151,7 +153,7 @@ trait TodoStyle extends StyleSheet.Standalone with Style {
         border.none,
         appearance := none,
         &.after - (
-          content := "✔",
+          content := "'✔'",
           lineHeight(43 px),
           fontSize(20 px),
           color("#d9d9d9"),
@@ -189,7 +191,7 @@ trait TodoStyle extends StyleSheet.Standalone with Style {
           textShadow := "0 0 1px #000, 0 0 10px rgba(199, 107, 107, 0.8)",
           transform := "scale(1.3)"
         ),
-        &.after - (content := "x")
+        &.after - (content := "'✖'")
       ),
       &(":hover .destroy") - display.block,
       &(".edit") - display.none
@@ -222,7 +224,7 @@ trait TodoStyle extends StyleSheet.Standalone with Style {
     height(20 px),
     textAlign.center,
     &.before - (
-      content := "",
+      content := "''",
       position.absolute,
       right(0 px),
       bottom(31 px),
@@ -285,19 +287,41 @@ trait TodoStyle extends StyleSheet.Standalone with Style {
     textAlign.center,
     &("a") - color.inherit
   )
-
-  "@media screen and (-webkit-min-device-pixel-ratio:0)" - (
-    &("#toggle-all, #todo-list li .toggle") - (background := none),
-    &("#todo-list li .toggle") - height(40 px),
-    &("#toggle-all") - (
+  
+  /* I can't get this right, I want "@media screen and (-webkit-min-device-pixel-ratio:0)" but I don't know how
+  "#toggle-all" - (
+    // TODO: dppx pending - https://github.com/japgolly/scalacss/issues/49
+    &(media.screen.minResolution((0 * 96) dpi)) - (
       top(-56 px),
       left(15 px),
       width(65 px),
       height(41 px),
-      transform := "rotate(90 deg)",
+      transform := "rotate(90deg)",
       appearance := none
     )
   )
+  
+  "#toggle-all, #todo-list li .toggle" - (
+    &(media.screen.minResolution((0 * 96) dpi)) - (background := none)
+  )
+  
+  "#todo-list li .toggle" - (
+    &(media.screen.minResolution((0 * 96) dpi)) - height(40 px)
+  )
+  */
+
+  "#toggle-all" - (
+    top(-56 px),
+    left(-15 px),
+    width(65 px),
+    height(41 px),
+    transform := "rotate(90deg)",
+    appearance := none
+  )
+  
+  "#toggle-all, #todo-list li .toggle" - (background := none)
+  
+  "#todo-list li .toggle" - height(40 px)
   
   ".hidden" - display.none
 
@@ -348,7 +372,7 @@ trait TodoStyle extends StyleSheet.Standalone with Style {
     &("p") - (
       fontStyle.italic,
       &.before - (
-        content := "“",
+        content := "'“'",
         fontSize(50 px),
         opacity(0.15),
         position.absolute,
@@ -356,7 +380,7 @@ trait TodoStyle extends StyleSheet.Standalone with Style {
         left(3 px)
       ),
       &.after - (
-        content := "”",
+        content := "'”'",
         fontSize(50 px),
         opacity(0.15),
         position.absolute,
@@ -382,7 +406,7 @@ trait TodoStyle extends StyleSheet.Standalone with Style {
     background := rgba(0, 0, 0, 0.04),
     borderRadius(5 px),
     &.after - (
-      content := "",
+      content := "''",
       position.absolute,
       top(100 %%),
       right(30 px),
@@ -403,17 +427,22 @@ trait TodoStyle extends StyleSheet.Standalone with Style {
     transitionDuration(500 millis)
   )
 
-  // TODO: why can't I use media queries here?
-  "@media (min-width: 899px)" - (
-    &(".learn-bar") - (
+  ".learn-bar" - (
+    &(media.minWidth(899 px)) - (
       width.auto,
-      margin(0 px, 0 px, 0 px, 300 px),
-      &("#todoapp") - (
-        width(550 px),
-        margin(130 px, auto, 40 px, auto)
-      )
-    ),
-    &(".learn-bar > .learn") - left(8 px)
+      margin(0 px, 0 px, 0 px, 300 px)
+    )
+  )
+  
+  ".learn-bar > .learn" - (
+    &(media.minWidth(899 px)) - left(8 px)
+  )
+  
+  ".learn-bar #todoapp" - (
+    &(media.minWidth(899 px)) - (
+      width(550 px),
+      margin(130 px, auto, 40 px, auto)
+    )
   )
 }
 object TodoStyle extends TodoStyle

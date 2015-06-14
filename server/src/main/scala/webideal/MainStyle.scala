@@ -20,8 +20,7 @@ trait MainStyle extends StyleSheet.Standalone with Style {
   
   // Hide for mobile, show later
   ".sidebar" - (
-    // TODO: figure out the better way to do this
-    &(media.maxWidth(767 px)) - display.none,
+    display.none,
     &(media.minWidth(768 px)) - (
       position.fixed,
       top(51 px),

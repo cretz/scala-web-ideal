@@ -2,13 +2,13 @@ package webideal
 package index
 
 import akka.stream.FlowMaterializer
-import scala.concurrent.ExecutionContext
 import akka.http.scaladsl.marshalling.ToResponseMarshallable.apply
 import akka.http.scaladsl.server.Directive.addByNameNullaryApply
 import akka.http.scaladsl.server.Directive.addDirectiveApply
+import akka.actor.ActorSystem
 
 trait IndexPage extends Page {
-  def apply()(implicit ec: ExecutionContext, mat: FlowMaterializer) = pathEnd {
+  def apply()(implicit sys: ActorSystem, mat: FlowMaterializer) = pathEnd {
     get {
       extractRequestContext { implicit ctx =>
         complete(IndexView(SharedMessages.itWorks))

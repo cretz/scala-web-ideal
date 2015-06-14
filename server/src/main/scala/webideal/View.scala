@@ -1,5 +1,6 @@
 package webideal
 
+import prickle._
 import scalatags.Text.all._
 import scala.reflect.ClassTag
 
@@ -11,5 +12,9 @@ trait View {
   def scriptPath(path: String) = script(src := path, tpe := "text/javascript")
   
   def jsModule[T <: JsModule](implicit tag: ClassTag[T]) =
-    script(raw(tag.runtimeClass.getName + "Impl().run()"))
+    script(raw(tag.runtimeClass.getName + "Impl().run();"))
+  
+  def jsModuleWithParams[T <: JsModuleWithParams](params: T#ParamType)
+      (implicit tag: ClassTag[T], pickler: Pickler[T#ParamType]) =
+    script(raw(tag.runtimeClass.getName + "Impl().runWithParams(" + Pickle.intoString(params) + ");"))
 }

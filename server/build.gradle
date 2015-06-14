@@ -10,6 +10,7 @@ dependencies {
   compile "com.lihaoyi:scalatags_$scalaVersion:0.5.2"
   compile "com.lihaoyi:autowire_$scalaVersion:0.2.5"
   compile "com.lihaoyi:scalarx_$scalaVersion:0.2.8"
+  compile "de.heikoseeberger:akka-sse_$scalaVersion:0.13.0"
   compile "com.github.japgolly.scalacss:core_$scalaVersion:0.2.0"
   compile "com.github.benhutchison:prickle_$scalaVersion:1.1.5"
   compile "org.scala-js:scalajs-stubs_$scalaVersion:$scalaJsReleaseVersion"

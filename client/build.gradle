@@ -32,6 +32,7 @@ task createBuildDir() << {
 task compileScalaJs(type: JavaExec, dependsOn: [compileScala, createBuildDir]) {
   main = 'org.scalajs.cli.Scalajsld'
   args = [
+    '-n',
     '--stdlib',
     configurations.runtime.find { it.name.startsWith('scalajs-library_') },
     '-o',

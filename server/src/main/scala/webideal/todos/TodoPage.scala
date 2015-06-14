@@ -2,12 +2,12 @@ package webideal
 package todos
 
 import akka.stream.FlowMaterializer
-import scala.concurrent.ExecutionContext
+import akka.actor.ActorSystem
 
 trait TodoPage extends Page {
   import TodoPage._
   
-  def apply()(implicit ec: ExecutionContext, mat: FlowMaterializer) = {
+  def apply()(implicit sys: ActorSystem, mat: FlowMaterializer) = {
     pathEnd {
       get {
         extractRequestContext { implicit ctx =>
@@ -17,6 +17,7 @@ trait TodoPage extends Page {
     } ~
     post {
       import util.PrickleAutowireSupport._
+      import sys.dispatcher
       completeWithAutowire(AutowireServer.route[TodoHandler](handler))
     }
   }
