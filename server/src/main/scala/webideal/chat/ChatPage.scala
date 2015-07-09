@@ -3,7 +3,7 @@ package chat
 
 import prickle._
 import autowire._
-import akka.stream.FlowMaterializer
+import akka.stream.Materializer
 import akka.stream.scaladsl.Flow
 import akka.http.scaladsl.model.ws.Message
 import akka.actor.ActorSystem
@@ -15,7 +15,7 @@ import akka.stream.scaladsl.Source
 trait ChatPage extends Page with EventStreamMarshalling {
   import ChatPage._
   
-  def apply()(implicit sys: ActorSystem, mat: FlowMaterializer) = {
+  def apply()(implicit sys: ActorSystem, mat: Materializer) = {
     pathEnd {
       get {
         extractRequestContext { implicit ctx =>

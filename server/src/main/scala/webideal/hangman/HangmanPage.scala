@@ -1,11 +1,11 @@
 package webideal
 package hangman
 
-import akka.stream.FlowMaterializer
+import akka.stream.Materializer
 import akka.actor.ActorSystem
 
 trait HangmanPage extends Page {
-  def apply()(implicit sys: ActorSystem, mat: FlowMaterializer) = {
+  def apply()(implicit sys: ActorSystem, mat: Materializer) = {
     pathEnd {
       get {
         extractRequestContext { implicit ctx =>

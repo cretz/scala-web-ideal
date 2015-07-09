@@ -3,19 +3,17 @@ configurations {
 }
 
 dependencies {
+  compile "org.scala-js:scalajs-library_$scalaVersion:$scalaJsReleaseVersion"
+  compile "org.scala-js:scalajs-dom_sjs${scalaJsVersion}_$scalaVersion:0.8.0"
   compile "com.lihaoyi:scalatags_sjs${scalaJsVersion}_$scalaVersion:0.5.2"
   compile "com.lihaoyi:autowire_sjs${scalaJsVersion}_$scalaVersion:0.2.5"
   compile "com.lihaoyi:scalarx_sjs${scalaJsVersion}_$scalaVersion:0.2.8"
-  compile "org.scala-js:scalajs-dom_sjs${scalaJsVersion}_$scalaVersion:0.8.0"
   compile "com.github.benhutchison:prickle_sjs${scalaJsVersion}_$scalaVersion:1.1.5"
   compile "be.doeraene:scalajs-jquery_sjs${scalaJsVersion}_$scalaVersion:0.8.0"
 
   // Have to pretend like scala-js is provided so it isn't considered a runtime lib
   provided "org.scala-js:scalajs-compiler_$scalaReleaseVersion:$scalaJsReleaseVersion"
-
-  // TODO: Remove this depending upon response to https://groups.google.com/forum/?fromgroups#!topic/scala-js/tcWk7IEosGk
-  provided files("$rootDir/../scalajs_${scalaVersion}-${scalaJsReleaseVersion}/lib/scalajs-cli-assembly_${scalaVersion}-${scalaJsReleaseVersion}.jar")
-  // provided "org.scala-js:scalajs-cli_$scalaVersion:$scalaJsReleaseVersion"
+  provided "org.scala-js:scalajs-cli_$scalaVersion:$scalaJsReleaseVersion"
 }
 
 compileScala {

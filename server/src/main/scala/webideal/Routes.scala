@@ -3,7 +3,7 @@ package webideal
 import akka.http.scaladsl.server.Route
 import org.webjars.WebJarAssetLocator
 import akka.http.scaladsl.server.RequestContext
-import akka.stream.FlowMaterializer
+import akka.stream.Materializer
 import akka.http.scaladsl.server.RejectionHandler
 import akka.http.scaladsl.model.StatusCodes
 import scala.util.Try
@@ -13,7 +13,7 @@ import akka.actor.ActorSystem
 object Routes extends Page {
   val webJarLocator = new WebJarAssetLocator()
   
-  def apply()(implicit sys: ActorSystem, mat: FlowMaterializer): Route = {
+  def apply()(implicit sys: ActorSystem, mat: Materializer): Route = {
     // Some things to support the application
     path(separateOnSlashes(Assets.mainJavascriptRemotePath)) {
       getFromFile(Assets.mainJavascriptLocalPath)

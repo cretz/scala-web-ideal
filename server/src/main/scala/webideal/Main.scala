@@ -1,6 +1,6 @@
 package webideal
 
-import akka.stream.ActorFlowMaterializer
+import akka.stream.ActorMaterializer
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import scala.io.StdIn
@@ -11,7 +11,7 @@ object Main extends App {
   
   implicit val system = ActorSystem("my-system")
   import system.dispatcher
-  implicit val materializer = ActorFlowMaterializer()
+  implicit val materializer = ActorMaterializer()
   
   val bindingFuture = Http().bindAndHandle(Routes(), "localhost", 8080)
  

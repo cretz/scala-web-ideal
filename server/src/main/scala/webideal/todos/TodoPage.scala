@@ -1,13 +1,13 @@
 package webideal
 package todos
 
-import akka.stream.FlowMaterializer
+import akka.stream.Materializer
 import akka.actor.ActorSystem
 
 trait TodoPage extends Page {
   import TodoPage._
   
-  def apply()(implicit sys: ActorSystem, mat: FlowMaterializer) = {
+  def apply()(implicit sys: ActorSystem, mat: Materializer) = {
     pathEnd {
       get {
         extractRequestContext { implicit ctx =>

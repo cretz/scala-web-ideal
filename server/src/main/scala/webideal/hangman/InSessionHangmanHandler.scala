@@ -75,7 +75,7 @@ object InSessionHangmanHandler {
   def withHangmanHandler: Directive1[HangmanHandler] = {
     optionalCookie(cookieName).flatMap { cookie =>
       val handler = new InSessionHangmanHandler(
-        cookie.flatMap(c => GameWithWord(util.CryptoSupport.decrypt(c.content)))
+        cookie.flatMap(c => GameWithWord(util.CryptoSupport.decrypt(c.value)))
       )
       val originalGame = handler.game
       mapResponseHeaders({ headers =>
@@ -86,7 +86,7 @@ object InSessionHangmanHandler {
           headers :+ `Set-Cookie`(
             HttpCookie(
               name = cookieName,
-              content = util.CryptoSupport.encrypt(handler.game.get.marshal)
+              value = util.CryptoSupport.encrypt(handler.game.get.marshal)
             )
           )
         } else {

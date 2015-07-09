@@ -2,9 +2,9 @@ import org.gradle.plugins.ide.eclipse.model.Link
 import org.gradle.plugins.ide.eclipse.model.SourceFolder
 
 ext.scalaVersion = '2.11'
-ext.scalaReleaseVersion = scalaVersion + '.6'
+ext.scalaReleaseVersion = scalaVersion + '.7'
 ext.scalaJsVersion = '0.6'
-ext.scalaJsReleaseVersion = scalaJsVersion + '.3'
+ext.scalaJsReleaseVersion = scalaJsVersion + '.4'
 
 subprojects {
   apply plugin: 'scala'
